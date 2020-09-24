@@ -1,126 +1,108 @@
 #include <iostream>
-using namespace std;
+#include <array>
 #include <vector>
-#include <numeric>
-#include <iomanip>
+#include <string>
+#include <sstream>
 
-//! ASSIGNMENT: Print Pay Stub
+//! ASSIGNMENT: Example Midterm
 
-//* Ask the user for the employee pay info: name (string), the starting working date (mm/dd/yyyy), number of hours (double), hourly pay rate (double). Then it prints out the simple summary of the paysub (please see an example below)
-//* The overtime pay is calculated as follows
-//* any hour more than 60 hours per week is calculated as double time
-//* any hour more than 40 hours per week but less than or equal 60 is calculated as 1.5 pay
-//* any hour equal or under 40 hours is calculated as regular pay
-//* Continuously ask the user to enter another set of data until the user chooses to exit the program
-//* Before exiting the program, it will print out the summary that includes
-//* the total number of employees that it has printed out the paystub
-//* the total number of hours for all employees that have been entered
-//* the total pay amount for all employees
 
-bool getContinue(void)
-{
-	char input;
-	while (true)
+//* Instead of returning an object, I will return an array with the number of each grade, then the number of invalids
+int* analyzeScores(int arr[], int n) {
+	int a=0,b=0,c=0,d=0,f=0,inval=0;
+	for (size_t i = 0; i < n; i++)
 	{
-		cout << "Do you want to enter another pay info (y/n)? ";
-		cin >> input;
-		if (input == 89 || input == 121)
-		{ //ascii codes for y/Y
-			return true;
+		if (arr[i] >= 90) {
+			a++;
 		}
-		else if (input == 78 || input == 110)
-		{
-			return false;
+		else if (arr[i] >= 80) {
+			b++;
 		}
-		else
-		{
-			cout << "Please enter one of the following: n,N,y,Y.\n";
+		else if (arr[i] >= 70) {
+			c++;
 		}
-		fflush(stdin);
+		else if (arr[i] >= 60) {
+			d++;
+		}
+		else if (arr[i] >= 0) {
+			f++;
+		}
+		else {
+			inval++;
+		}
 	}
+	int * result;
+	result = new int[6];
+	result[0] = a;
+	result[1] = b;
+	result[2] = c;
+	result[3] = d;
+	result[4] = f;
+	result[5] = inval;
+	return result;
 }
 
-float calculatePay(float hours, float rate)
-{
-	return rate * (((hours - 60) * 2 + 20 * 1.5 + 40 * 1) * (hours > 60) + ((hours - 40) * 1.5 + 40 * 1) * (hours > 40 && hours <= 60) + ((hours)*1) * (hours <= 40));
-}
 
-bool goodBounds(float hours, float rate)
-{
-	bool returnvalue = true; //so that we can print multiple errors
-	if (hours < 0) {
-		cout << "Error: number of hours cannot be 0 or negative. \n";
-		returnvalue = false;
+void printRectangle(char out, int width, int height) {
+	int i,j;
+	for (i=0;i<height;i++) {
+		for (j=0;j<width;j++) {
+			if ((i==0 || i==height-1) || (j==0 || j==width-1)) {
+				std::cout << out;
+			}
+			else {
+				std::cout << " ";
+			}
+		}
+		std::cout << std::endl;
 	}
-	else if (hours > 168) {
-		cout << "Error: number of hours cannot be greater 168 hours (24*7) per week. \n";
-		returnvalue = false;
-	}
-	if (rate < 0) {
-		cout << "Error: Pay rate cannot be negative. \n";
-		returnvalue = false;
-	}
-	else if (rate > 9999) {
-		cout << "Wow, I would like to have " << rate << " as my hourly rate. \n";
-	}
-	return returnvalue;
 }
 
 int main(void)
 {
-	int totalEmployees = 0;
-	float totalHours = 0;
-	float totalPayment = 0;
-	bool continuing = true;
-	std::cout << std::fixed;
-	cout << setprecision(2);
-	while (continuing)
-	{
-		fflush(stdin);
-		float hours;
-		float payment;
-		string name;
-		string startdate;
-		float rate;
-
-		cout << "Please enter the employee's name: ";
-		getline(cin, name);
-		cout << "Please enter the starting work date (mm/dd/yyyy): ";
-		cin >> startdate;
-		cout << "Please enter how many hours that the employee has worked for this week: ";
-		cin >> hours;
-		cout << "Please enter the employee's hourly rate: ";
-		cin >> rate;
-
-		if (!goodBounds(hours,rate)) {
-			continue;
-		}
-		payment = calculatePay(hours, rate);
-
-		cout << "=======PAY STUB========================= \n"
-			 << "Employee name:   " << name << endl
-			 << "Number of hours: " << hours << endl
-			 << "Hourly rate:    "
-			 << "$" << rate << endl
-			 << "Gross pay:      "
-			 << "$" << payment << endl
-			 << "Date:            " << startdate << endl
-			 << "========================================" << endl;
-
-		totalEmployees++;
-		totalHours += hours;
-		totalPayment += payment;
-		continuing = getContinue();
-		if (!continuing)
-		{
-			cout << "=======TOTAL PAY SUMMARY================" << endl
-				 << "Total number of employees:   " << totalEmployees << endl
-				 << "Total number of paid hours:  " << totalHours << endl
-				 << "Total amount of payment:    "
-				 << "$" << totalPayment << endl
-				 << "========================================" << endl;
-		}
+	std::cout << "TESTING analyzeScores\n";
+	std::cout << "Enter space-delimited array of integers for grades: ";
+	std::vector<int> input;
+	int size = 0;
+	std::string inputstr;
+	std::getline(std::cin, inputstr);
+	std::istringstream sstr(inputstr);
+	int temp;
+	while(sstr >> temp) {
+		input.push_back(temp);
+		size++;
 	}
+	// std::cin.clear();
+	// std::cin.ignore(1024,'\n');
+	int arr[size];
+	for (size_t i = 0; i < size; i++)
+	{
+		arr[i]=input[i];
+	}
+	
+	int * output;
+	output = new int[6];
+	output = analyzeScores(arr,size);
+	std::cout << "Output of analyzeScores:" << std::endl;
+	std::cout << "A:" << output[0] << ", " << "B:" << output[1] << ", " << "C:" << output[2] << ", " << "D:" << output[3] << ", " << "F:" << output[4] << ", " << "Fail:" << output[5];
+	std::cout << std::endl;
+
+	std::cout << std::endl << "TESTING printRectangle\n";
+	std::cout << "Enter a character: ";
+	char tempchar;
+	std::cin >> tempchar;
+	std::cout << "Enter the width: ";
+	int tempwidth;
+	std::cin >> tempwidth;
+	std::cout << "Enter the height: ";
+	int tempheight;
+	std::cin >> tempheight;
+	std::cout << "Output of printRectangle:" << std::endl;
+	printRectangle(tempchar,tempwidth,tempheight);
+	
+	
+
 
 	return 0;
 }
+
