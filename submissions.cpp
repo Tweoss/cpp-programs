@@ -42,7 +42,6 @@ int* analyzeScores(int arr[], int n) {
 	return result;
 }
 
-
 void printRectangle(char out, int width, int height) {
 	int i,j;
 	for (i=0;i<height;i++) {
