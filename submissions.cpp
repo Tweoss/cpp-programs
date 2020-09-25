@@ -58,6 +58,81 @@ void printRectangle(char out, int width, int height) {
 	}
 }
 
+//* will modify input string instead of create new one
+bool extractComment(std::string & input) {
+	bool output = false;
+	if (input.length() > 3) {
+		if (input[0] == '/' && input[1] == '/' && input[2] == ' ') {
+			output = true;
+			input[0] = ' '; input[1] = ' '; 
+			std::rotate(input.begin(),input.begin() + 3, input.end());
+		}
+	}
+	return output;
+}
+
+bool checkAgainstVariableNamingRules(std::string input) {
+	bool output = true;
+	if (input.length() > 255 || input.length() == 0) {
+		output = false;
+	}
+	else if (input[0] != 95 && !(input[0] > 64 && input[0] < 91) && !(input[0] > 96 && input[0] < 123)){
+		output = false;
+	}
+	else {
+		for (size_t i = 0; i< input.length(); i++) {
+			if (!(input[i] == 95 || (input[i] > 47 && input[i] < 58) || (input[i] > 64 && input[i] < 91) || (input[i] > 96 && input[i] < 123))) {
+				output = false;
+				break;
+			}
+		}
+	}
+	// std::cout << input[0] << std::endl;
+	// std::cout << (int) input[1] << std::endl;
+	// std::cout << (int) input[2] << std::endl;
+	// std::cout << (int) input[3] << std::endl;
+	// std::cout << (int) input[4] << std::endl;
+	// std::cout << (int) input[5] << std::endl;
+	// std::cout << (int) input[6] << std::endl;
+	// std::cout << (int) input[7] << std::endl;
+	// std::cout << (int) input[8] << std::endl;
+	// std::cout << (int) input[9] << std::endl;
+	return output;
+}
+
+bool isBoundedList(void) {
+	int max, min;
+	int input, first_input, last_input;
+	bool output = false;
+	std::cout << "Please enter non-negative score: ";
+	std::cin >> first_input;
+	max = first_input; min = first_input;
+	input = first_input;
+	last_input = first_input;
+	while (input >= 0) {
+		last_input = input;
+		if (input > max) {
+			max = input;
+		}
+		else if (input < min) {
+			min = input;
+		}
+		std::cout << "Please enter non-negative score: ";
+		std::cin >> input;
+	}
+	if (first_input == max) {
+		if (last_input == min) {
+			output = true;
+		}
+	}
+	else if (first_input == min) {
+		if (last_input == max) {
+			output = true;
+		}
+	}
+	return output;
+}
+
 int main(void)
 {
 	std::cout << "TESTING analyzeScores\n";
@@ -72,8 +147,7 @@ int main(void)
 		input.push_back(temp);
 		size++;
 	}
-	// std::cin.clear();
-	// std::cin.ignore(1024,'\n');
+	
 	int arr[size];
 	for (size_t i = 0; i < size; i++)
 	{
@@ -93,16 +167,51 @@ int main(void)
 	std::cin >> tempchar;
 	std::cout << "Enter the width: ";
 	int tempwidth;
+std::cin.clear();
+std::cin.ignore(1024,'\n');
 	std::cin >> tempwidth;
 	std::cout << "Enter the height: ";
 	int tempheight;
+std::cin.clear();
+std::cin.ignore(1024,'\n');
 	std::cin >> tempheight;
 	std::cout << "Output of printRectangle:" << std::endl;
 	printRectangle(tempchar,tempwidth,tempheight);
 	
-	
+std::cin.clear();
+std::cin.ignore(1024,'\n');
 
+	std::cout << std::endl << "TESTING extractComment\n";
+	std::cout << "Enter a string: ";
+	std::string inputstring;
+	std::getline(std::cin,inputstring);
+	bool tempbool;
+	tempbool = extractComment(inputstring);
+	std::cout << "\nOutput of extractComment:" << std::endl;
+	if (tempbool) {
+		std::cout << inputstring << std::endl;
+	}
+	else {
+		std::cout << "No comment to extract\n";
+	}
 
+	std::cout << std::endl << "TESTING checkAgainstVariableNamingRules\n";
+	std::cout << "Enter a string: ";
+	std::getline(std::cin,inputstring);
+	tempbool = checkAgainstVariableNamingRules(inputstring);
+	std::cout << "\nOutput of checkAgainstVariableNamingRules:" << std::endl;
+	if (tempbool) {
+		std::cout << "Good Variable Name\n";
+	}
+	else {
+		std::cout << "Bad Variable Name\n";
+	}
+
+	std::cout << std::endl << "TESTING isBoundedList\n";
+	std::cout << "Output of isBoundedList:" << std::endl;
+	tempbool = isBoundedList();
+	std::cout << std::boolalpha;   
+    std::cout<< tempbool <<"\n";
 	return 0;
 }
 
