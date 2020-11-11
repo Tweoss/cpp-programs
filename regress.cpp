@@ -265,18 +265,18 @@ int main()
 	damping = 0.1; iterations = 999;
 	//? Initialize a guess
 	{
-		//TODO uncomment: */ std::cout << "Equation: A*sin(B*x+C)+D\nEnter your floating-point guesses for \nA: ";
-		//TODO uncomment: */ std::cin >> parameters[0];
-		//TODO uncomment: */ std::cout << "B: ";
-		//TODO uncomment: */ std::cin >> parameters[1];
-		//TODO uncomment: */ std::cout << "C: ";
-		//TODO uncomment: */ std::cin >> parameters[2];
-		//TODO uncomment: */ std::cout << "D: ";
-		//TODO uncomment: */ std::cin >> parameters[3];
-		//TODO uncomment: */ std::cout << "Damping Factor: ";
-		//TODO uncomment: */ std::cin >> damping;
-		//TODO uncomment: */ std::cout << "Number of Iterations: ";
-		//TODO uncomment: */ std::cin >> iterations;
+		/*//TODO uncomment: */ std::cout << "Equation: A*sin(B*x+C)+D\nEnter your floating-point guesses for \nA: ";
+		/*//TODO uncomment: */ std::cin >> parameters[0];
+		/*//TODO uncomment: */ std::cout << "B: ";
+		/*//TODO uncomment: */ std::cin >> parameters[1];
+		/*//TODO uncomment: */ std::cout << "C: ";
+		/*//TODO uncomment: */ std::cin >> parameters[2];
+		/*//TODO uncomment: */ std::cout << "D: ";
+		/*//TODO uncomment: */ std::cin >> parameters[3];
+		/*//TODO uncomment: */ std::cout << "Damping Factor: ";
+		/*//TODO uncomment: */ std::cin >> damping;
+		/*//TODO uncomment: */ std::cout << "Number of Iterations: ";
+		/*//TODO uncomment: */ std::cin >> iterations;
 	}
 
 	int iter;
@@ -389,20 +389,20 @@ int main()
 		//debug 	std::cout << endl;
 		//debug }
 		//? Adjust parameters according to gradient and damping factor
-	cout << parameters[0] << "*" 
-		<< "sin(" << parameters[1]
-		<< "*x+" << parameters[2]
-		<< ")+" << parameters[3]
-		<< endl
-		;
-	}
 	// cout << parameters[0] << "*" 
 	// 	<< "sin(" << parameters[1]
 	// 	<< "*x+" << parameters[2]
 	// 	<< ")+" << parameters[3]
 	// 	<< endl
 	// 	;
-	cout << "Iterations: " << iterations;
-	cout << "Damping: "<<damping;
+	}
+	cout << parameters[0] << "*" 
+		<< "sin(" << parameters[1]
+		<< "*x+" << parameters[2]
+		<< ")+" << parameters[3]
+		<< endl
+		;
+	// cout << "Iterations: " << iterations;
+	// cout << "Damping: "<<damping;
 	return 0;
 }
