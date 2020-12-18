@@ -162,6 +162,7 @@ Var4Bool *createNewVar(void)
 			}
 			stop = true;
 		}
+		//* note: catches ANY exception b/c of stoi and parse_bool
 		catch (const std::exception &e)
 		{
 			std::cerr << "Failed to create var because " << e.what() << '\n';
