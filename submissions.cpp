@@ -38,16 +38,16 @@ public:
 	{
 		if (name.length() == 0)
 		{
-			throw VarException("no string entered", 1);
+			throw new VarException("no string entered", 1);
 		}
 		else if (name.find_first_not_of(' ') == std::string::npos)
 		{
-			throw VarException("only spaces", 2);
+			throw new VarException("only spaces", 2);
 		}
 		//* uses the range of ascii values so doesnt test each digit
 		else if (48 <= name[0] && name[0] <= 57)
 		{
-			throw VarException("begins with a number", 3);
+			throw new VarException("begins with a number", 3);
 		}
 	}
 	//* virtual cuz will be overridden by Var4Int
@@ -89,15 +89,15 @@ public:
 		setName(name);
 		if (name.length() == 0)
 		{
-			throw VarException("no string entered", 1);
+			throw new VarException("no string entered", 1);
 		}
 		else if (name.find_first_not_of(' ') == std::string::npos)
 		{
-			throw VarException("only spaces", 2);
+			throw new VarException("only spaces", 2);
 		}
 		else if (48 <= name[0] && name[0] <= 57)
 		{
-			throw VarException("begins with a number", 3);
+			throw new VarException("begins with a number", 3);
 		}
 	}
 	std::string toString(void)
