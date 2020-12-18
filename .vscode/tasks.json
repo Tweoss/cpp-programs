@@ -24,13 +24,16 @@
 				"panel": "shared",
 				"showReuseMessage": false,
 				"clear": true
-			}
+			},
+			"group": "build"
 		},
 		{
 			"label": "Exec",
 			"type": "shell",
 			"command": "${fileDirname}/./${fileBasenameNoExtension}",
-			"args": ["-amount", "1"],
+			"args": [
+				"librarydata.txt"
+			],
 			"options": {
 				"cwd": "${workspaceFolder}"
 			},
@@ -42,16 +45,25 @@
 				"showReuseMessage": false,
 				"clear": false
 			}
-
 		},
-		{		
+		{
 			"label": "Build & Exec",
 			"dependsOrder": "sequence",
-			"dependsOn": ["Build", "Exec"],
+			"dependsOn": [
+				"Build",
+				"Exec"
+			],
 			"group": {
 				"kind": "build",
 				"isDefault": true
-			}
+			},
+			"problemMatcher": []
 		},
+		{
+			"label": "Open Terminal",
+			"type": "shell",
+			"command": "osascript -e 'tell application \"Terminal\"\ndo script \"echo hello\"\nend tell'",
+			"problemMatcher": []
+		  }
 	]
 }

@@ -6,8 +6,7 @@
 Event::Event(int month, int day, std::string descrip) : SimpleDate(month, day) {
 	m_descrip = descrip;
 	if (!(0 < month && month < 13)) {
-		std::cout << "Failed to create Event due to month bounds (1-12).\n";
-		exit(1);
+		throw("Failed to create Event due to month bounds (1-12).");
 	}
 }
 

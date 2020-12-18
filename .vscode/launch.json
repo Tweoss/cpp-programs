@@ -9,11 +9,11 @@
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${fileDirname}/${fileBasenameNoExtension}",
-			"args": ["-amount", "1"],
+			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${workspaceFolder}",
 			"environment": [],
-			"externalConsole": false,
+			"externalConsole": true,
 			"MIMode": "lldb",
 			"preLaunchTask": "C/C++: clang++ build active file"
 		}
