@@ -6,18 +6,20 @@
 #include "LibraryItem.h"
 
 
+
 //! ASSIGNMENT: PROJECT #3: MANAGE THE LIBRARY
 
 
 
 class LibraryItemBase : LibraryItem {
-	public:
+	private:
 	std::string is_available;
-	std::string searchable;
+	// std::string searchable;
 	std::string type;
 	std::string uid;
 	std::string title;
 	std::string author;
+	public:
 	
 	bool isOnLoan() {
 		bool output = false;
@@ -76,28 +78,61 @@ class LibraryItemBase : LibraryItem {
 		return sstream.str();
 	}
 	bool search(std::string search_string) {
-		bool output = false;
+		std::string searchable = title;
+		std::transform(searchable.begin(), searchable.end(), searchable.begin(), ::tolower);
 		if (searchable.find(search_string) != std::string::npos) {
 			return true;
 		}
-		return output;
+		else {
+			return false;
+		}
+	}
+	
+	std::string get_is_available() {
+		return is_available;
+	}
+	std::string get_type() {
+		return type;
+	}
+	std::string get_uid() {
+		return uid;
+	}
+	std::string get_title() {
+		return title;
+	}
+	std::string get_author() {
+		return author;
+	}
+	void set_is_available(std::string input) {
+		is_available = input;
+	}
+	void set_type(std::string input) {
+		type = input;
+	}
+	void set_uid(std::string input) {
+		uid = input;
+	}
+	void set_title(std::string input) {
+		title = input;
+	}
+	void set_author(std::string input) {
+		author = input;
 	}
 };
 
 class Book : public LibraryItemBase {
 	public:
 	Book(std::string ttype, std::string uuid, std::string ttile, std::string aauthor) {
-		type = ttype; uid = uuid; title = ttile; author = aauthor; is_available = "available"; searchable = title; searchable.append(author);
-		std::transform(searchable.begin(), searchable.end(), searchable.begin(), ::tolower);
+		set_type(ttype); set_uid(uuid); set_title(ttile); set_author(aauthor); set_is_available("available"); 
 	}
+
 } ;
 
 
 class Cd : public LibraryItemBase {
 	public:
 	Cd(std::string ttype, std::string uuid, std::string ttile, std::string aauthor) {
-		type = ttype; uid = uuid; title = ttile; author = aauthor; is_available = "available"; searchable = title; searchable.append(author);
-		std::transform(searchable.begin(), searchable.end(), searchable.begin(), ::tolower);
+		set_type(ttype); set_uid(uuid); set_title(ttile); set_author(aauthor); set_is_available("available"); 
 	}
 };
 
@@ -147,6 +182,7 @@ class LibraryCatalog {
 		else {
 			//* FAILURE
 			std::cout << "Failed to locate \"" << file << ".\" Please check that the file exists.";
+			//* Chose to exit
 			exit(0);
 		}
 	}
@@ -195,7 +231,7 @@ class LibraryCatalog {
 		bool found  = false;
 		for (size_t i = 0; i < container.size(); i++)
 		{
-			if (container[i].uid == uid && !found) {
+			if (container[i].get_uid() == uid && !found) {
 				if (container[i].borrow()) {
 					std::cout << "Successfully borrowed item \'" << uid << "\'.\n";
 				}
@@ -213,7 +249,7 @@ class LibraryCatalog {
 		bool found = false;
 		for (size_t i = 0; i < container.size(); i++)
 		{
-			if (container[i].uid == uid) {
+			if (container[i].get_uid() == uid) {
 				if (container[i].takeBack()) {
 					std::cout << "Successfully returned \'" << uid << "\'.\n";
 				}
@@ -235,12 +271,14 @@ void check_argsize(int argc) {
 	{
 	case 1:
 		std::cout << "Please use the file name of the Library file as an argument.\n";
+		//* better to exit than throw
 		exit(1);
 		break;
 	case 2:
 		break;
 	default:
 		std::cout << "Please enter a single file name as an argument.\n";
+		//* better to exit than throw
 		exit(1);
 		break;
 	}
