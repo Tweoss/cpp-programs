@@ -21,14 +21,11 @@ class Node
 {
 private:
     int data;
+    Node *previous;
     Node *next;
 
 public:
-    Node(int d)
-    {
-        data = d;
-        next = NULL;
-    }
+    Node(int data, Node* previous, Node* next): data(data), previous(previous), next(next) {}
     int getData()
     {
         return data;
@@ -37,9 +34,17 @@ public:
     {
         return next;
     }
+    Node *getPrevious()
+    {
+        return previous;
+    }
     void setNext(Node *n)
     {
         next = n;
+    }
+    void setPrevious(Node *n)
+    {
+        previous = n;
     }
     void setData(int d)
     {
@@ -51,7 +56,7 @@ public:
         Node *temp = this;
         while (temp != NULL)
         {
-            std::cout << temp->data << "(" << temp->next << ") ";
+            std::cout << temp->data << "(" << temp << ") ";
             temp = temp->next;
         }
         std::cout << std::endl;
@@ -64,27 +69,28 @@ public:
         {
             temp = temp->next;
         }
-        temp->next = new Node(d);
-    }
-    void deleteNode(int d)
-    {
-        // delete node with this value
-        Node *temp = this;
-        while (temp->next != NULL)
-        {
-            if (temp->next->data == d)
-            {
-                temp->next = temp->next->next;
-                return;
-            }
-            temp = temp->next;
-        }
+        temp->next = new Node(d, temp, NULL);
     }
 };
 
+void deleteNodePointer(Node *n)
+{
+    // delete node at this pointer.
+    // changes pointes of previous and next
+    if (n->getPrevious() != NULL)
+    {
+        n->getPrevious()->setNext(n->getNext());
+    }
+    if (n->getNext() != NULL)
+    {
+        n->getNext()->setPrevious(n->getPrevious());
+    }
+    free(n);
+}
+
 int main(int argc, char const *argv[])
 {
-    Node list(0);
+    Node list(0, NULL, NULL);
     int input = 0;
     std::cout << "Enter numbers to insert into the list. End with -1: " << std::endl;
     std::cin >> input;
@@ -94,6 +100,12 @@ int main(int argc, char const *argv[])
         std::cin >> input;
         list.insertNode(input);
     }
+    std::cout << "List: " << std::endl;
+    list.printList();
+    std::cout << "Enter a pointer to delete from the list: " << std::endl;
+    void* pointer;
+    std::cin >> pointer;
+    deleteNodePointer((Node*) pointer);
     std::cout << "List: " << std::endl;
     list.printList();
     return 0;
