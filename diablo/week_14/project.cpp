@@ -59,7 +59,7 @@ void State::up(int units)
 
 void State::down(int units)
 {
-    if (y + units <= obstacles[0].size() - 1)
+    if (y + units <= obstacles.size() - 1)
     {
         y += units;
     }
@@ -114,8 +114,20 @@ void State::print()
 
 void State::spawn_obstacle()
 {
-    int r = rand() % obstacles.size();
-    obstacles[r][obstacles[r].size() - 1] = true;
+    int i = rand() % obstacles.size();
+    int left_buffer = obstacles[i].size() / 2;
+    int j = rand() % (obstacles[0].size() - left_buffer) + left_buffer;
+    int radius = rand() % obstacles.size() / 10;
+    for (int x = 0; x < obstacles.size(); x++)
+    {
+        for (int y = 0; y < obstacles[0].size(); y++)
+        {
+            if ((i - x ) * (i - x) + (j - y) * (j - y) <= radius * radius)
+            {
+                obstacles[x][y] = true;
+            }
+        }
+    }
 }
 
 void State::end()
